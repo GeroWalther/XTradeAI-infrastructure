@@ -181,16 +181,6 @@ module "ec2_instance" {
 }
 
 
-######################################
-# S3 Bucket for CodePipeline Artifacts
-######################################
-module "codepipeline_s3" {
-  source = "terraform-aws-modules/s3-bucket/aws"
-
-  bucket = "trade-bot-codepipeline-bucket"
-  force_destroy = true
-}
-
 
 ######################################
 # Store .env in AWS SSM Parameter Store
