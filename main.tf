@@ -179,3 +179,36 @@ module "ec2_instance" {
     Environment = terraform.workspace
   }
 }
+
+
+######################################
+# S3 Bucket for CodePipeline Artifacts
+######################################
+module "codepipeline_s3" {
+  source = "terraform-aws-modules/s3-bucket/aws"
+
+  bucket = "trade-bot-codepipeline-bucket"
+  force_destroy = true
+}
+
+
+######################################
+# Store .env in AWS SSM Parameter Store
+######################################
+resource "aws_ssm_parameter" "trade_bot_env" {
+  name  = "/trade-bot/.env"
+  type  = "SecureString"
+  value = <<EOF
+    OANDA_ACCESS_TOKEN=
+    OANDA_ACCOUNT_ID=
+    OANDA_ENVIRONMENT=
+    ANTHROPIC_API_KEY=
+    NEWS_API_KEY=
+    FRED_API_KEY=
+    ALPHA_VANTAGE_API_KEY=
+    FINNHUB_API_KEY=
+    EIA_API_KEY=
+    OPENAI_API_KEY=
+    NEWS_API_KEY=
+EOF
+}
